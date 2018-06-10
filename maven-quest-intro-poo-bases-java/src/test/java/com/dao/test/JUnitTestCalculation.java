@@ -45,19 +45,23 @@ public class JUnitTestCalculation {
         Assert.assertEquals(2, calculation.verifyParite("-4"));
         Assert.assertEquals(3, calculation.verifyParite("3"));
         Assert.assertEquals(4, calculation.verifyParite("-3"));
+        
+        log.debug(calculation.verifyParite("-30000003332323232"));
         log.debug("Sortie de la methode");
     }
 
     @Test
     public void testJUnitCompareChaines() {
         log.debug("Entree de la methode");
-        Assert.assertEquals(0, calculation.compareChaines("chat", "chat"));
+        Assert.assertEquals(0, calculation.compareChaines("lion", "chat"));
         Assert.assertEquals(-1, calculation.compareChaines("chat", "chbt"));
         Assert.assertEquals(1, calculation.compareChaines("chot", "chat"));
         Assert.assertEquals(-1, calculation.compareChaines("chat", "chien"));
         Assert.assertEquals(0, calculation.compareChaines("chien", "chien"));
         Assert.assertEquals(1, calculation.compareChaines("lion", "chat"));
         Assert.assertEquals(0, calculation.compareChaines("lion", "lion"));
+        
+        log.debug(calculation.compareChaines("lion", "lion"));
         log.debug("Sortie de la methode");
     }
 
@@ -65,10 +69,13 @@ public class JUnitTestCalculation {
     public void testJUnitFactorielItterative() {
         log.debug("Entree de la methode");
         Assert.assertEquals(1, calculation.factorielItterative(0));
+        log.debug(calculation.factorielItterative(16));
         Assert.assertEquals(120, calculation.factorielItterative(5));
         Assert.assertEquals(40320, calculation.factorielItterative(8));
         Assert.assertEquals(3628800, calculation.factorielItterative(10));
         Assert.assertEquals(2004189184, calculation.factorielItterative(16));
+        
+ 
         log.debug("Sortie de la methode");
     }
 
@@ -80,6 +87,8 @@ public class JUnitTestCalculation {
         Assert.assertEquals(40320, calculation.factorielRecursive(8));
         Assert.assertEquals(3628800, calculation.factorielRecursive(10));
         Assert.assertEquals(2004189184, calculation.factorielRecursive(16));
+        
+        log.debug(calculation.factorielRecursive(16));
         log.debug("Sortie de la methode");
     }
 

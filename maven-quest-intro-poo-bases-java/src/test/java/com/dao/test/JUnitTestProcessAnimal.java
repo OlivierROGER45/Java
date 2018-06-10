@@ -33,6 +33,7 @@ public class JUnitTestProcessAnimal {
     public static void testJUnitLoadAnimalsManually() {
         log.debug("Entree de la methode");
         Assert.assertEquals(11, processAnimal.loadAnimalsManually().size());
+        log.debug(processAnimal.loadAnimalsManually().size());
         log.debug("Sortie de la methode");
     }
 
@@ -51,6 +52,48 @@ public class JUnitTestProcessAnimal {
         log.debug("difference ecartType : " + Math.abs(195.7327 - processAnimal.calculEcartTypePoidsAnimaux()));
         Assert.assertTrue(Math.abs(122.3636 - processAnimal.calculMoyennePoidsAnimaux()) < 1e-4);
         Assert.assertTrue(Math.abs(195.7327 - processAnimal.calculEcartTypePoidsAnimaux()) < 1e-4);
+        log.debug("Sortie de la methode");
+    }
+    
+    @Test
+    public void sortAnimalsById() {
+        log.debug("Entree de la methode");
+        log.debug(processAnimal.sortAnimalsById());
+        log.debug("Sortie de la methode");
+    }
+    
+    @Test
+    public void sortAnimalsByWeight() {
+        log.debug("Entree de la methode");
+        log.debug(processAnimal.sortAnimalsByWeight());
+        log.debug("Sortie de la methode");
+    }
+    
+    @Test
+    public void sortAnimalsByName() {
+        log.debug("Entree de la methode");
+        log.debug(processAnimal.sortAnimalsByName());
+        log.debug("Sortie de la methode");
+    }
+    
+    @Test
+    public void sortAnimalsByColor() {
+        log.debug("Entree de la methode");
+        log.debug(processAnimal.sortAnimalsByColor());
+        log.debug("Sortie de la methode");
+    }
+    
+    @Test
+    public void generateFileByName() {
+        log.debug("Entree de la methode");
+        processAnimal.generateFileByName();
+        log.debug("Sortie de la methode");
+    }
+    
+    @Test
+    public void generateFileByWeight() {
+        log.debug("Entree de la methode");
+        processAnimal.generateFileByWeight();
         log.debug("Sortie de la methode");
     }
 
