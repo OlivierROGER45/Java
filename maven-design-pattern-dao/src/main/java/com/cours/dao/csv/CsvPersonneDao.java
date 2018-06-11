@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cours.dao.AbstractPersonneDao;
+import com.cours.dao.json.JsonPersonneDao;
 import com.cours.entities.Personne;
 
 public class CsvPersonneDao extends AbstractPersonneDao
@@ -20,10 +21,17 @@ public class CsvPersonneDao extends AbstractPersonneDao
 
     private List<Personne> listPersonne;
 
-    public CsvPersonneDao()
+    private CsvPersonneDao()
     {
         if (listPersonne == null)
             loadCSVFile();
+    }
+
+    private static CsvPersonneDao INSTANCE = new CsvPersonneDao();
+
+    public static CsvPersonneDao getInstance()
+    {
+        return INSTANCE;
     }
 
     public List<Personne> loadCSVFile()

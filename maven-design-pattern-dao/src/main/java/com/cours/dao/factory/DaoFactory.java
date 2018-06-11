@@ -18,7 +18,7 @@ public class DaoFactory
             dao = new ManualPersonneDao();
             break;
         case CSV_DAO:
-            dao = new CsvPersonneDao();
+            dao = CsvPersonneDao.getInstance();
             break;
         case XML_DAO:
             //dao = new Fedex(col, day);

@@ -15,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.cours.dao.xml.XmlPersonneDao;
 import com.cours.entities.Personne;
 
 public class JsonPersonneDao
@@ -22,11 +23,18 @@ public class JsonPersonneDao
     private final String   personnesJsonPathFile = "./personnesJson.json";
 
     private List<Personne> listPersonne;
-
-    public JsonPersonneDao()
+    
+    private JsonPersonneDao()
     {
         if (listPersonne == null)
             loadJSONFile();
+    }
+
+    private static JsonPersonneDao INSTANCE = new JsonPersonneDao();
+
+    public static JsonPersonneDao getInstance()
+    {
+        return INSTANCE;
     }
 
     public List<Personne> loadJSONFile()
@@ -87,7 +95,7 @@ public class JsonPersonneDao
 
     public void generateJSONFile()
     {
-        File f = new File("./test.json");
+        File f = new File(personnesJsonPathFile);
         if (f.exists())
             f.delete();
 
@@ -113,7 +121,7 @@ public class JsonPersonneDao
 
         System.out.print(finalJsonObj.toJSONString());
 
-        try (FileWriter file = new FileWriter("./test.json"))
+        try (FileWriter file = new FileWriter(personnesJsonPathFile))
         {
 
             file.write(finalJsonObj.toJSONString());

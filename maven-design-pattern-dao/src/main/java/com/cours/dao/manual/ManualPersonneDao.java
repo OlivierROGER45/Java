@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cours.dao.AbstractPersonneDao;
+import com.cours.dao.json.JsonPersonneDao;
 import com.cours.entities.Personne;
 
 public class ManualPersonneDao extends AbstractPersonneDao
@@ -11,9 +12,17 @@ public class ManualPersonneDao extends AbstractPersonneDao
 
     private List<Personne> manualPersonnes;
 
-    public ManualPersonneDao()
+    private ManualPersonneDao()
     {
-        // TODO Auto-generated constructor stub
+        if (manualPersonnes == null)
+            initData();
+    }
+
+    private static ManualPersonneDao INSTANCE = new ManualPersonneDao();
+
+    public static ManualPersonneDao getInstance()
+    {
+        return INSTANCE;
     }
     
     public List<Personne> initData() {
