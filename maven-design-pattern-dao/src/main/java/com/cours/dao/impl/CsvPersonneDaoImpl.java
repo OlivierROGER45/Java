@@ -10,11 +10,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.cours.dao.IPersonneDao;
 import com.cours.entities.Personne;
 
 public class CsvPersonneDaoImpl implements IPersonneDao
 {
+    private static final Log log = LogFactory.getLog(CsvPersonneDaoImpl.class);
+    
     private final String   personnesCsvPathFile = "./personnesCsv.csv";
 
     private List<Personne> listPersonne;

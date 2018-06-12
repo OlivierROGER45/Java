@@ -42,6 +42,17 @@ public class Personne
         this.ville = ville;
         this.codePostal = codePostal;
     }
+    
+    public Personne(String prenom, String nom, double poids, double taille, String rue, String ville, String codePostal)
+    {
+        this.prenom = prenom;
+        this.nom = nom;
+        this.poids = poids;
+        this.taille = taille;
+        this.rue = rue;
+        this.ville = ville;
+        this.codePostal = codePostal;
+    }
 
     @Override
     public String toString()

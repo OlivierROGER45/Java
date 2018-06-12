@@ -3,11 +3,15 @@ package com.cours.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.cours.dao.IPersonneDao;
 import com.cours.entities.Personne;
 
 public class ManualPersonneDaoImpl implements IPersonneDao
 {
+    private static final Log log = LogFactory.getLog(ManualPersonneDaoImpl.class);
 
     private List<Personne> manualPersonnes;
 

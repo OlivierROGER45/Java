@@ -1,10 +1,5 @@
 package com.cours.dao.impl;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,19 +10,14 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import com.cours.dao.IPersonneDao;
-import com.cours.dao.sql.SqlPersonneDao;
 import com.cours.entities.Personne;
 
 public class SqlPersonneDaoImpl implements IPersonneDao
 {
 
- private static final Log log = LogFactory.getLog(SqlPersonneDaoImpl.class);
-    
+    private static final Log log = LogFactory.getLog(SqlPersonneDaoImpl.class);
     
     Connection             connection      = null;
     boolean                dataBaseChanged = true;

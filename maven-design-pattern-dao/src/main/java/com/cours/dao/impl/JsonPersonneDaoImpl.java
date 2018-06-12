@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,6 +19,8 @@ import com.cours.entities.Personne;
 
 public class JsonPersonneDaoImpl implements IPersonneDao
 {
+    private static final Log log = LogFactory.getLog(JsonPersonneDaoImpl.class);
+    
     private final String   personnesJsonPathFile = "./personnesJson.json";
 
     private List<Personne> listPersonne;
@@ -92,10 +96,6 @@ public class JsonPersonneDaoImpl implements IPersonneDao
 
     public void generateJSONFile()
     {
-        File f = new File(personnesJsonPathFile);
-        if (f.exists())
-            f.delete();
-
         JSONObject jsonObj;
         JSONArray personList = new JSONArray();
 
@@ -115,8 +115,10 @@ public class JsonPersonneDaoImpl implements IPersonneDao
         }
         JSONObject finalJsonObj = new JSONObject();
         finalJsonObj.put("personnes", personList);
-
-        System.out.print(finalJsonObj.toJSONString());
+        
+        File f = new File(personnesJsonPathFile);
+        if (f.exists())
+            f.delete();
 
         try (FileWriter file = new FileWriter(personnesJsonPathFile))
         {
@@ -136,6 +138,7 @@ public class JsonPersonneDaoImpl implements IPersonneDao
     {
         if (listPersonne == null)
             loadJSONFile();
+        if(log.isDebugEnabled()) {log.debug(listPersonne);}
         return listPersonne;
     }
 
@@ -144,7 +147,10 @@ public class JsonPersonneDaoImpl implements IPersonneDao
         for (Personne p : listPersonne)
         {
             if (p.getIdPersonne() == id)
+            {
+                if(log.isDebugEnabled()) {log.debug(p);}
                 return p;
+            }
         }
         return null;
     }
@@ -161,6 +167,7 @@ public class JsonPersonneDaoImpl implements IPersonneDao
         }
         listPersonne.add(person);
         generateJSONFile();
+        if(log.isDebugEnabled()) {log.debug(person);}
         return person;
     }
 
@@ -172,6 +179,7 @@ public class JsonPersonneDaoImpl implements IPersonneDao
             {
                 listPersonne.set(i, person);
                 generateJSONFile();
+                if(log.isDebugEnabled()) {log.debug(person);}
                 return person;
             }
         }
@@ -185,6 +193,7 @@ public class JsonPersonneDaoImpl implements IPersonneDao
         {
             listPersonne.remove(person);
             generateJSONFile();
+            if(log.isDebugEnabled()) {log.debug("Deleted " + person);}
             return true;
         }
         return false;

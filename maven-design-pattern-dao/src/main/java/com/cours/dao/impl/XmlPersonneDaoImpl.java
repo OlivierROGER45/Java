@@ -13,6 +13,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -24,6 +26,8 @@ import com.cours.entities.Personne;
 
 public class XmlPersonneDaoImpl implements IPersonneDao
 {
+    private static final Log log = LogFactory.getLog(XmlPersonneDaoImpl.class);
+    
     private final String   personnesXmlPathFile = "./personnesXml.xml";
 
     private List<Personne> listPersonne;
@@ -84,15 +88,12 @@ public class XmlPersonneDaoImpl implements IPersonneDao
         {
             e.printStackTrace();
         }
+        if(log.isDebugEnabled()) {log.debug(listPersonne);}
         return listPersonne;
     }
 
     public void generateXMLFile()
     {
-        File f = new File(personnesXmlPathFile);
-        if (f.exists())
-            f.delete();
-
         try
         {
 
@@ -148,6 +149,11 @@ public class XmlPersonneDaoImpl implements IPersonneDao
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
+            
+            File f = new File(personnesXmlPathFile);
+            if (f.exists())
+                f.delete();
+
             StreamResult result = new StreamResult(new File(personnesXmlPathFile));
 
             transformer.transform(source, result);
@@ -167,6 +173,7 @@ public class XmlPersonneDaoImpl implements IPersonneDao
     {
         if (listPersonne == null)
             loadXMLFile();
+        if(log.isDebugEnabled()) {log.debug(listPersonne);}
         return listPersonne;
     }
 
@@ -175,7 +182,10 @@ public class XmlPersonneDaoImpl implements IPersonneDao
         for (Personne p : listPersonne)
         {
             if (p.getIdPersonne() == id)
+            {
+                if(log.isDebugEnabled()) {log.debug(p);}
                 return p;
+            }
         }
         return null;
     }
@@ -203,6 +213,7 @@ public class XmlPersonneDaoImpl implements IPersonneDao
             {
                 listPersonne.set(i, person);
                 generateXMLFile();
+                if(log.isDebugEnabled()) {log.debug(person);}
                 return person;
             }
         }
@@ -216,6 +227,7 @@ public class XmlPersonneDaoImpl implements IPersonneDao
         {
             listPersonne.remove(person);
             generateXMLFile();
+            if(log.isDebugEnabled()) {log.debug("Deleted " + person);}
             return true;
         }
         return false;
