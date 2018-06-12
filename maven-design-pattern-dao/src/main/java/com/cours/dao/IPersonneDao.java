@@ -1,8 +1,8 @@
 package com.cours.dao;
 
-import com.cours.entities.Personne;
-
 import java.util.List;
+
+import com.cours.entities.Personne;
 
 public interface IPersonneDao {
 

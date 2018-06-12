@@ -1,14 +1,14 @@
 package com.cours.main;
 
-import com.cours.dao.AbstractPersonneDao;
-import com.cours.dao.factory.DaoFactory.FactoryType;
-import com.cours.dao.json.JsonPersonneDao;
-import com.cours.dao.xml.XmlPersonneDao;
-import com.cours.entities.Personne;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.cours.dao.sql.SqlPersonneDao;
+import com.cours.entities.Personne;
 
 public class MainDao
 {
@@ -20,10 +20,17 @@ public class MainDao
         // JsonPersonneDao json = new JsonPersonneDao();
         // json.loadJSONFile();
         // json.generateJSONFile();
+        
+        Log log = LogFactory.getLog(MainDao.class);
 
-        XmlPersonneDao xml = new XmlPersonneDao();
+        //XmlPersonneDao xml = new XmlPersonneDao();
         // xml.loadXMLFile();
-        xml.generateXMLFile();
+        //xml.generateXMLFile();
+        
+        SqlPersonneDao sql = SqlPersonneDao.getInstance();
+        sql.findById(1);
+        sql.findAll();
+        
     }
 
     /**

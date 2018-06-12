@@ -28,7 +28,7 @@ public class Personne
     
     public Personne()
     {
-        //idPersonne = count.incrementAndGet(); 
+
     }
     
     public Personne(int idPersonne, String prenom, String nom, double poids, double taille, String rue, String ville, String codePostal)

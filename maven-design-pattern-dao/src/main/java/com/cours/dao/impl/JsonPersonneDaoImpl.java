@@ -1,4 +1,4 @@
-package com.cours.dao.json;
+package com.cours.dao.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,24 +12,24 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import com.cours.dao.AbstractPersonneDao;
+import com.cours.dao.IPersonneDao;
 import com.cours.entities.Personne;
 
-public class JsonPersonneDao extends AbstractPersonneDao
+public class JsonPersonneDaoImpl implements IPersonneDao
 {
     private final String   personnesJsonPathFile = "./personnesJson.json";
 
     private List<Personne> listPersonne;
     
-    private JsonPersonneDao()
+    private JsonPersonneDaoImpl()
     {
         if (listPersonne == null)
             loadJSONFile();
     }
 
-    private static JsonPersonneDao INSTANCE = new JsonPersonneDao();
+    private static JsonPersonneDaoImpl INSTANCE = new JsonPersonneDaoImpl();
 
-    public static JsonPersonneDao getInstance()
+    public static JsonPersonneDaoImpl getInstance()
     {
         return INSTANCE;
     }

@@ -1,4 +1,4 @@
-package com.cours.dao.xml;
+package com.cours.dao.impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,24 +19,24 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.cours.dao.AbstractPersonneDao;
+import com.cours.dao.IPersonneDao;
 import com.cours.entities.Personne;
 
-public class XmlPersonneDao extends AbstractPersonneDao
+public class XmlPersonneDaoImpl implements IPersonneDao
 {
     private final String   personnesXmlPathFile = "./personnesXml.xml";
 
     private List<Personne> listPersonne;
 
-    private XmlPersonneDao()
+    private XmlPersonneDaoImpl()
     {
         if (listPersonne == null)
             loadXMLFile();
     }
 
-    private static XmlPersonneDao INSTANCE = new XmlPersonneDao();
+    private static XmlPersonneDaoImpl INSTANCE = new XmlPersonneDaoImpl();
 
-    public static XmlPersonneDao getInstance()
+    public static XmlPersonneDaoImpl getInstance()
     {
         return INSTANCE;
     }

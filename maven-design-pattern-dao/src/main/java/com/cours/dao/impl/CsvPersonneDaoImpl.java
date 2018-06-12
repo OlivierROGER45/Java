@@ -1,4 +1,4 @@
-package com.cours.dao.csv;
+package com.cours.dao.impl;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,24 +10,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cours.dao.AbstractPersonneDao;
+import com.cours.dao.IPersonneDao;
 import com.cours.entities.Personne;
 
-public class CsvPersonneDao extends AbstractPersonneDao
+public class CsvPersonneDaoImpl implements IPersonneDao
 {
     private final String   personnesCsvPathFile = "./personnesCsv.csv";
 
     private List<Personne> listPersonne;
 
-    private CsvPersonneDao()
+    private CsvPersonneDaoImpl()
     {
         if (listPersonne == null)
             loadCSVFile();
     }
 
-    private static CsvPersonneDao INSTANCE = new CsvPersonneDao();
+    private static CsvPersonneDaoImpl INSTANCE = new CsvPersonneDaoImpl();
 
-    public static CsvPersonneDao getInstance()
+    public static CsvPersonneDaoImpl getInstance()
     {
         return INSTANCE;
     }
@@ -47,7 +47,7 @@ public class CsvPersonneDao extends AbstractPersonneDao
             while ((line = br.readLine()) != null)
             {       
                 String[] attributes = line.split(splitBy);
-                // check number attributes
+                // check number attributes and header
                 if (attributes.length == 8 && lineNumber != 0)
                 {
                     try

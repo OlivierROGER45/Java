@@ -2,7 +2,9 @@ package com.cours.dao.factory;
 
 import com.cours.dao.AbstractPersonneDao;
 import com.cours.dao.csv.CsvPersonneDao;
+import com.cours.dao.json.JsonPersonneDao;
 import com.cours.dao.manual.ManualPersonneDao;
+import com.cours.dao.xml.XmlPersonneDao;
 
 public class DaoFactory
 {
@@ -15,16 +17,16 @@ public class DaoFactory
         switch (type)
         {
         case MANUAL_DAO:
-            dao = new ManualPersonneDao();
+            dao = ManualPersonneDao.getInstance();
             break;
         case CSV_DAO:
             dao = CsvPersonneDao.getInstance();
             break;
         case XML_DAO:
-            //dao = new Fedex(col, day);
+            dao = XmlPersonneDao.getInstance();
             break;
         case JSON_DAO:
-            //dao = new DHL(col, day);
+            dao = JsonPersonneDao.getInstance();
             break;
         case SQL_DAO:
             //dao = new DHL(col, day);

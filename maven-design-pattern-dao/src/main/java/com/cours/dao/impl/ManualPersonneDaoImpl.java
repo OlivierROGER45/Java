@@ -1,25 +1,25 @@
-package com.cours.dao.manual;
+package com.cours.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cours.dao.AbstractPersonneDao;
+import com.cours.dao.IPersonneDao;
 import com.cours.entities.Personne;
 
-public class ManualPersonneDao extends AbstractPersonneDao
+public class ManualPersonneDaoImpl implements IPersonneDao
 {
 
     private List<Personne> manualPersonnes;
 
-    private ManualPersonneDao()
+    private ManualPersonneDaoImpl()
     {
         if (manualPersonnes == null)
             initData();
     }
 
-    private static ManualPersonneDao INSTANCE = new ManualPersonneDao();
+    private static ManualPersonneDaoImpl INSTANCE = new ManualPersonneDaoImpl();
 
-    public static ManualPersonneDao getInstance()
+    public static ManualPersonneDaoImpl getInstance()
     {
         return INSTANCE;
     }

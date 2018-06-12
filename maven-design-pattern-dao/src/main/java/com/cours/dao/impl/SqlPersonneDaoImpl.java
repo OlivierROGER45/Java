@@ -1,5 +1,10 @@
-package com.cours.dao.sql;
+package com.cours.dao.impl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,13 +15,18 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
-import com.cours.dao.AbstractPersonneDao;
+import com.cours.dao.IPersonneDao;
+import com.cours.dao.sql.SqlPersonneDao;
 import com.cours.entities.Personne;
 
-public class SqlPersonneDao extends AbstractPersonneDao
+public class SqlPersonneDaoImpl implements IPersonneDao
 {
-    private static final Log log = LogFactory.getLog(SqlPersonneDao.class);
+
+ private static final Log log = LogFactory.getLog(SqlPersonneDaoImpl.class);
     
     
     Connection             connection      = null;
@@ -24,7 +34,7 @@ public class SqlPersonneDao extends AbstractPersonneDao
 
     private List<Personne> listPersonne;
 
-    private SqlPersonneDao()
+    private SqlPersonneDaoImpl()
     {
         try
         {
@@ -57,9 +67,9 @@ public class SqlPersonneDao extends AbstractPersonneDao
         }
     }
 
-    private static SqlPersonneDao INSTANCE = new SqlPersonneDao();
+    private static SqlPersonneDaoImpl INSTANCE = new SqlPersonneDaoImpl();
 
-    public static SqlPersonneDao getInstance()
+    public static SqlPersonneDaoImpl getInstance()
     {
         return INSTANCE;
     }
@@ -192,7 +202,6 @@ public class SqlPersonneDao extends AbstractPersonneDao
 
     public boolean delete(Personne person)
     {
-
         try
         {
             String queryString = "DELETE FROM student WHERE idPersonne=?";
@@ -211,5 +220,4 @@ public class SqlPersonneDao extends AbstractPersonneDao
         if(log.isDebugEnabled()) {log.debug("Deleted " + person);}
         return true;
     }
-
 }
