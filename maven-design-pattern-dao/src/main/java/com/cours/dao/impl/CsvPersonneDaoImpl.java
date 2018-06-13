@@ -97,6 +97,7 @@ public class CsvPersonneDaoImpl implements IPersonneDao
                 }
             }
         }
+        if(log.isDebugEnabled()) {log.debug(listPersonne);}
         return listPersonne;
     }
     
@@ -148,6 +149,7 @@ public class CsvPersonneDaoImpl implements IPersonneDao
     {
         if (listPersonne == null)
             loadCSVFile();
+        if(log.isDebugEnabled()) {log.debug(listPersonne);}
         return listPersonne;
     }
 
@@ -156,7 +158,10 @@ public class CsvPersonneDaoImpl implements IPersonneDao
         for (Personne p : listPersonne)
         {
             if (p.getIdPersonne() == id)
+            {
+            	if(log.isDebugEnabled()) {log.debug(p);}
                 return p;
+            }
         }
         return null;
     }
@@ -171,6 +176,7 @@ public class CsvPersonneDaoImpl implements IPersonneDao
             maxId++;
             person.setIdPersonne(maxId);
         }
+        if(log.isDebugEnabled()) {log.debug(person);}
         listPersonne.add(person);
         generateCSVFile();
         return person;
@@ -184,6 +190,7 @@ public class CsvPersonneDaoImpl implements IPersonneDao
             {
                 listPersonne.set(i, person);
                 generateCSVFile();
+                if(log.isDebugEnabled()) {log.debug(person);}
                 return person;
             }
         }
@@ -197,6 +204,7 @@ public class CsvPersonneDaoImpl implements IPersonneDao
         {
             listPersonne.remove(person);
             generateCSVFile();
+            if(log.isDebugEnabled()) {log.debug("Deleted " + person);}
             return true;
         }
         return false;

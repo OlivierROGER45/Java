@@ -15,19 +15,19 @@ public abstract class AbstractDaoFactory
         switch (type)
         {
         case MANUAL_DAO:
-            dao = new ManualDaoFactory();
+            dao = new ManualDaoFactory().getPersonneDao(type);
             break;
         case CSV_DAO:
-            dao = new CsvDaoFactory();
+            dao = new CsvDaoFactory().getPersonneDao(type);
             break;
         case XML_DAO:
-            dao = new XmlDaoFactory();
+            dao = new XmlDaoFactory().getPersonneDao(type);
             break;
         case JSON_DAO:
-            dao = new JsonDaoFactory();
+            dao = new JsonDaoFactory().getPersonneDao(type);
             break;
         case SQL_DAO:
-            dao = new SqlDaoFactory();
+            dao = new SqlDaoFactory().getPersonneDao(type);
             break;
         }
         return dao;

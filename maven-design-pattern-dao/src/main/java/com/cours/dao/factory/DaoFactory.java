@@ -4,6 +4,7 @@ import com.cours.dao.AbstractPersonneDao;
 import com.cours.dao.csv.CsvPersonneDao;
 import com.cours.dao.json.JsonPersonneDao;
 import com.cours.dao.manual.ManualPersonneDao;
+import com.cours.dao.sql.SqlPersonneDao;
 import com.cours.dao.xml.XmlPersonneDao;
 
 public class DaoFactory
@@ -29,7 +30,7 @@ public class DaoFactory
             dao = JsonPersonneDao.getInstance();
             break;
         case SQL_DAO:
-            //dao = new DHL(col, day);
+        	dao = SqlPersonneDao.getInstance();
             break;
         }
         return dao;

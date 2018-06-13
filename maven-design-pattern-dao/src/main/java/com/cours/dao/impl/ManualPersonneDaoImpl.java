@@ -47,7 +47,10 @@ public class ManualPersonneDaoImpl implements IPersonneDao
         for (Personne p : manualPersonnes)
         {
             if (p.getIdPersonne() == id)
+            {
+            	  if(log.isDebugEnabled()) {log.debug(p);}
                 return p;
+            }
         }
         return null;
     }
@@ -63,6 +66,7 @@ public class ManualPersonneDaoImpl implements IPersonneDao
             person.setIdPersonne(maxId);
         }
         manualPersonnes.add(person);
+        if(log.isDebugEnabled()) {log.debug(person);}
         return person;
     }
 
@@ -73,6 +77,7 @@ public class ManualPersonneDaoImpl implements IPersonneDao
             if (manualPersonnes.get(i).getIdPersonne() == person.getIdPersonne())
             {
                 manualPersonnes.set(i, person);
+                if(log.isDebugEnabled()) {log.debug(person);}
                 return person;
             }
         }
@@ -85,6 +90,7 @@ public class ManualPersonneDaoImpl implements IPersonneDao
         if (null != findById(person.getIdPersonne()))
         {
             manualPersonnes.remove(person);
+            if(log.isDebugEnabled()) {log.debug("Deleted" + person);}
             return true;
         }
         return false;

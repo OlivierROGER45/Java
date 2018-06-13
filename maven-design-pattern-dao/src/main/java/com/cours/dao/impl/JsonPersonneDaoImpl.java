@@ -91,6 +91,7 @@ public class JsonPersonneDaoImpl implements IPersonneDao
         {
             e.printStackTrace();
         }
+        if(log.isDebugEnabled()) {log.debug(listPersonne);}
         return listPersonne;
     }
 
