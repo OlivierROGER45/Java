@@ -4,30 +4,30 @@ import com.cours.dao.IPersonneDao;
 
 public abstract class AbstractDaoFactory
 {
-    abstract IPersonneDao getPersonneDao();
+    abstract public IPersonneDao getPersonneDao();
     
     public enum FactoryType {MANUAL_DAO, CSV_DAO, XML_DAO, JSON_DAO, SQL_DAO};
     
-    public static AbstractDaoFactory getPersonneDao(FactoryType type)
+    public static AbstractDaoFactory getDaoFactory(FactoryType type)
     {
         AbstractDaoFactory dao = null;
 
         switch (type)
         {
         case MANUAL_DAO:
-            dao = new ManualDaoFactory().getPersonneDao(type);
+            dao = new ManualDaoFactory();
             break;
         case CSV_DAO:
-            dao = new CsvDaoFactory().getPersonneDao(type);
+            dao = new CsvDaoFactory();
             break;
         case XML_DAO:
-            dao = new XmlDaoFactory().getPersonneDao(type);
+            dao = new XmlDaoFactory();
             break;
         case JSON_DAO:
-            dao = new JsonDaoFactory().getPersonneDao(type);
+            dao = new JsonDaoFactory();
             break;
         case SQL_DAO:
-            dao = new SqlDaoFactory().getPersonneDao(type);
+            dao = new SqlDaoFactory();
             break;
         }
         return dao;

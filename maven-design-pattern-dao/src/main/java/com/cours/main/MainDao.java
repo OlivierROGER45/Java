@@ -26,12 +26,13 @@ public class MainDao
 
     public static void main(String[] args)
     {
-        CsvDaoFactory csvDao = (CsvDaoFactory) AbstractDaoFactory.getPersonneDao(FactoryType.CSV_DAO);
-        JsonDaoFactory jsonDao = (JsonDaoFactory) AbstractDaoFactory.getPersonneDao(FactoryType.JSON_DAO);
-        ManualDaoFactory manualDao = (ManualDaoFactory) AbstractDaoFactory.getPersonneDao(FactoryType.MANUAL_DAO);
-        SqlDaoFactory sqlDao = (SqlDaoFactory) AbstractDaoFactory.getPersonneDao(FactoryType.SQL_DAO);
-        XmlDaoFactory xplDao = (XmlDaoFactory) AbstractDaoFactory.getPersonneDao(FactoryType.XML_DAO);
         
+        AbstractDaoFactory sqlDao = AbstractDaoFactory.getDaoFactory(FactoryType.SQL_DAO);
+        AbstractDaoFactory jsonDao = AbstractDaoFactory.getDaoFactory(FactoryType.JSON_DAO);
+        AbstractDaoFactory manualDao = AbstractDaoFactory.getDaoFactory(FactoryType.MANUAL_DAO);
+        AbstractDaoFactory csvDao = AbstractDaoFactory.getDaoFactory(FactoryType.CSV_DAO);
+        AbstractDaoFactory xplDao = AbstractDaoFactory.getDaoFactory(FactoryType.XML_DAO);
+                
         // Create
         Personne p = new Personne("CreateFirstName", "CreateName", 22.2, 178.2, "CreateRue", "CreateVille", "45000");
         // Update
@@ -61,7 +62,7 @@ public class MainDao
 
         sqlDao.getPersonneDao().findAll();
         sqlDao.getPersonneDao().create(p);
-        sqlDao.getPersonneDao().findById(11);
+        sqlDao.getPersonneDao().findById(9);
         sqlDao.getPersonneDao().update(p2);
         sqlDao.getPersonneDao().findAll();
 
@@ -71,86 +72,6 @@ public class MainDao
         xplDao.getPersonneDao().update(p2);
         xplDao.getPersonneDao().findAll();
         
-        
-
-//        CsvPersonneDaoImpl.getInstance().findAll();
-//        CsvPersonneDaoImpl.getInstance().create(p);
-//        CsvPersonneDaoImpl.getInstance().findById(11);
-//        CsvPersonneDaoImpl.getInstance().update(p2);
-//        CsvPersonneDaoImpl.getInstance().delete(p3);
-//        CsvPersonneDaoImpl.getInstance().findAll();
-        
-//        JsonPersonneDao.getInstance().findAll();
-//        JsonPersonneDao.getInstance().create(p);
-//        JsonPersonneDao.getInstance().findById(11);
-//        JsonPersonneDao.getInstance().update(p2);
-//        JsonPersonneDao.getInstance().delete(p3);
-//        JsonPersonneDao.getInstance().findAll();
-//        
-//        XmlPersonneDao.getInstance().findAll();
-//        XmlPersonneDao.getInstance().create(p);
-//        XmlPersonneDao.getInstance().findById(11);
-//        XmlPersonneDao.getInstance().update(p2);
-//        XmlPersonneDao.getInstance().delete(p3);
-//        XmlPersonneDao.getInstance().findAll();
-        
-        
-        
-        
-//        /**
-//         * CSV
-//         */
-//        IPersonneDao c = (IPersonneDao) facto.getPersonneDao(FactoryType.CSV_DAO);
-//        c.findAll();
-//        c.create(p);
-//        c.findById(11);
-//        c.update(p2);
-//        c.delete(p3);
-//        c.findAll();
-//        
-//        /**
-//         * Json
-//         */
-//        IPersonneDao j = (IPersonneDao) facto.getPersonneDao(FactoryType.JSON_DAO);
-//        j.findAll();
-//        j.create(p);
-//        j.findById(11);
-//        j.update(p2);
-//        j.delete(p3);
-//        j.findAll();
-//        
-//        /**
-//         * Manual
-//         */
-//        IPersonneDao m = (IPersonneDao) facto.getPersonneDao(FactoryType.MANUAL_DAO);
-//        m.findAll();
-//        m.create(p);
-//        m.findById(11);
-//        m.update(p2);
-//        m.delete(p3);
-//        m.findAll();
-//        
-//        /**
-//         * SQL
-//         */
-//        IPersonneDao s = (IPersonneDao) facto.getPersonneDao(FactoryType.SQL_DAO);
-//        s.findAll();
-//        s.create(p);
-//        s.findById(11);
-//        s.update(p2);
-//        s.delete(p3);
-//        s.findAll();
-//        
-//        /**
-//         * XML
-//         */
-//        IPersonneDao x = (IPersonneDao) facto.getPersonneDao(FactoryType.XML_DAO);
-//        x.findAll();
-//        x.create(p);
-//        x.findById(11);
-//        x.update(p2);
-//        x.delete(p3);
-//        x.findAll();
     }
 
     /**

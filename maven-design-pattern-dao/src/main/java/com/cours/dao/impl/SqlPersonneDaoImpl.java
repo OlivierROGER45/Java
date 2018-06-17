@@ -17,12 +17,14 @@ import com.cours.entities.Personne;
 public class SqlPersonneDaoImpl implements IPersonneDao
 {
 
-    private static final Log log = LogFactory.getLog(SqlPersonneDaoImpl.class);
-    
-    Connection             connection      = null;
-    boolean                dataBaseChanged = true;
+    private static final Log log             = LogFactory.getLog(SqlPersonneDaoImpl.class);
 
-    private List<Personne> listPersonne;
+    Connection               connection      = null;
+    PreparedStatement        ptmt            = null;
+    ResultSet                rs              = null;
+    boolean                  dataBaseChanged = true;
+
+    private List<Personne>   listPersonne;
 
     private SqlPersonneDaoImpl()
     {
@@ -69,13 +71,17 @@ public class SqlPersonneDaoImpl implements IPersonneDao
         if (true == dataBaseChanged || listPersonne == null)
         {
             listPersonne = new ArrayList<Personne>();
+
             try
             {
+                connection = DriverManager.getConnection(
+                        "jdbc:mysql://127.0.0.1:3306/base_personnes?autoReconnect=true&useSSL=false", "roger",
+                        "password");
                 String queryString = "SELECT * FROM personne";
 
-                PreparedStatement ptmt = connection.prepareStatement(queryString);
-                
-                ResultSet rs = ptmt.executeQuery(queryString);
+                ptmt = connection.prepareStatement(queryString);
+
+                rs = ptmt.executeQuery(queryString);
                 while (rs.next())
                 {
                     int i = rs.getInt("idPersonne");
@@ -95,54 +101,185 @@ public class SqlPersonneDaoImpl implements IPersonneDao
             {
                 e.printStackTrace();
             }
+            finally
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                try
+                {
+                    ptmt.close();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                try
+                {
+                    connection.close();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
         }
-        if(log.isDebugEnabled()) {log.debug(listPersonne);}
+        if (log.isDebugEnabled())
+        {
+            log.debug(listPersonne);
+        }
         return listPersonne;
     }
 
     public Personne findById(int id)
     {
-        Personne personne = new Personne();
+        Personne p = new Personne();
         if (true == dataBaseChanged || listPersonne == null)
         {
             try
             {
-                ResultSet result = this.connection
-                        .createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)
-                        .executeQuery("SELECT * FROM personne WHERE IdPersonne = " + id);
-                if (result.first())
-                    personne = new Personne(id, result.getString("Prenom"), result.getString("Nom"),
-                            result.getDouble("Poids"), result.getDouble("Taille"), result.getString("Rue"),
-                            result.getString("Ville"), result.getString("CodePostal"));
-                connection.close();
+                connection = DriverManager.getConnection(
+                        "jdbc:mysql://127.0.0.1:3306/base_personnes?autoReconnect=true&useSSL=false", "roger",
+                        "password");
+                String queryString = "SELECT * FROM personne WHERE IdPersonne = " + id;
+
+                ptmt = connection.prepareStatement(queryString);
+
+                rs = ptmt.executeQuery(queryString);
+                while (rs.next())
+                {
+                    int i = rs.getInt("idPersonne");
+                    String firstname = rs.getString("Prenom");
+                    String name = rs.getString("Nom");
+                    Double poids = rs.getDouble("Poids");
+                    Double taille = rs.getDouble("Taille");
+                    String rue = rs.getString("Rue");
+                    String ville = rs.getString("Ville");
+                    String codePostal = rs.getString("CodePostal");
+
+                    p = new Personne(i, firstname, name, poids, taille, rue, ville, codePostal);
+
+                }
             }
             catch (SQLException e)
             {
                 e.printStackTrace();
             }
+            finally
+            {
+                try
+                {
+                    rs.close();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                try
+                {
+                    ptmt.close();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                try
+                {
+                    connection.close();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
         }
         else
         {
-            for (Personne p : listPersonne)
+            for (Personne p1 : listPersonne)
             {
-                if (p.getIdPersonne() == id)
+                if (p1.getIdPersonne() == id)
                 {
-                    if(log.isDebugEnabled()) {log.debug("Your base is up to date " + p);}
+                    if (log.isDebugEnabled())
+                    {
+                        log.debug("Your base is up to date " + p1);
+                    }
                     return p;
                 }
             }
         }
-        if(log.isDebugEnabled()) {log.debug(personne);}
-        return personne;
+        if (log.isDebugEnabled())
+        {
+            log.debug(p);
+        }
+        return p;
     }
+
+    // public Personne findById(int id)
+    // {
+    // Personne personne = new Personne();
+    // if (true == dataBaseChanged || listPersonne == null)
+    // {
+    // try
+    // {
+    // connection = DriverManager.getConnection(
+    // "jdbc:mysql://127.0.0.1:3306/base_personnes?autoReconnect=true&useSSL=false",
+    // "roger",
+    // "password");
+    // String queryString = "SELECT * FROM personne WHERE IdPersonne = " + id;
+    //
+    // ptmt = connection.prepareStatement(queryString);
+    //
+    // rs = ptmt.executeQuery(queryString);
+    //
+    // personne = new Personne(id, rs.getString("Prenom"), rs.getString("Nom"),
+    // rs.getDouble("Poids"), rs.getDouble("Taille"), rs.getString("Rue"),
+    // rs.getString("Ville"), rs.getString("CodePostal"));
+    // }
+    // catch (SQLException e)
+    // {
+    // e.printStackTrace();
+    // }
+    // finally {
+    // try { rs.close(); } catch (Exception e) { e.printStackTrace(); }
+    // try { ptmt.close(); } catch (Exception e) { e.printStackTrace(); }
+    // try { connection.close(); } catch (Exception e) { e.printStackTrace();}
+    // }
+    // }
+    // else
+    // {
+    // for (Personne p : listPersonne)
+    // {
+    // if (p.getIdPersonne() == id)
+    // {
+    // if (log.isDebugEnabled())
+    // {
+    // log.debug("Your base is up to date " + p);
+    // }
+    // return p;
+    // }
+    // }
+    // }
+    // if (log.isDebugEnabled())
+    // {
+    // log.debug(personne);
+    // }
+    // return personne;
+    // }
 
     public Personne create(Personne person)
     {
         try
         {
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://127.0.0.1:3306/base_personnes?autoReconnect=true&useSSL=false", "roger", "password");
             String queryString = "INSERT INTO personne(Prenom, Nom, Poids, Taille, Rue, Ville, CodePostal) VALUES(?,?,?,?,?,?,?)";
 
-            PreparedStatement ptmt = connection.prepareStatement(queryString);
+            ptmt = connection.prepareStatement(queryString);
             ptmt.setString(1, person.getPrenom());
             ptmt.setString(2, person.getNom());
             ptmt.setDouble(3, person.getPoids());
@@ -151,7 +288,7 @@ public class SqlPersonneDaoImpl implements IPersonneDao
             ptmt.setString(6, person.getVille());
             ptmt.setString(7, person.getCodePostal());
             ptmt.executeUpdate();
-            connection.close();
+
             dataBaseChanged = true;
         }
         catch (SQLException e)
@@ -159,7 +296,37 @@ public class SqlPersonneDaoImpl implements IPersonneDao
             dataBaseChanged = false;
             e.printStackTrace();
         }
-        if(log.isDebugEnabled()) {log.debug(person);}
+        finally
+        {
+            try
+            {
+                rs.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                ptmt.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                connection.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        if (log.isDebugEnabled())
+        {
+            log.debug(person);
+        }
         return person;
     }
 
@@ -167,8 +334,10 @@ public class SqlPersonneDaoImpl implements IPersonneDao
     {
         try
         {
-            String queryString = "UPDATE student SET Prenom=?,Nom=?,Poids=?,Taille=?,Rue=?,Ville=?,CodePostal=?, WHERE idPersonne=?";
-            PreparedStatement ptmt = connection.prepareStatement(queryString);
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://127.0.0.1:3306/base_personnes?autoReconnect=true&useSSL=false", "roger", "password");
+            String queryString = "UPDATE personne SET Prenom=?,Nom=?,Poids=?,Taille=?,Rue=?,Ville=?,CodePostal=? WHERE idPersonne=?";
+            ptmt = connection.prepareStatement(queryString);
             ptmt.setString(1, person.getPrenom());
             ptmt.setString(2, person.getNom());
             ptmt.setDouble(3, person.getPoids());
@@ -178,7 +347,6 @@ public class SqlPersonneDaoImpl implements IPersonneDao
             ptmt.setString(7, person.getCodePostal());
             ptmt.setInt(8, person.getIdPersonne());
             ptmt.executeUpdate();
-            connection.close();
             dataBaseChanged = true;
         }
         catch (SQLException e)
@@ -186,7 +354,37 @@ public class SqlPersonneDaoImpl implements IPersonneDao
             dataBaseChanged = false;
             e.printStackTrace();
         }
-        if(log.isDebugEnabled()) {log.debug(person);}
+        finally
+        {
+            try
+            {
+                rs.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                ptmt.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                connection.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        if (log.isDebugEnabled())
+        {
+            log.debug(person);
+        }
         return person;
     }
 
@@ -194,11 +392,12 @@ public class SqlPersonneDaoImpl implements IPersonneDao
     {
         try
         {
-            String queryString = "DELETE FROM student WHERE idPersonne=?";
-            PreparedStatement ptmt = connection.prepareStatement(queryString);
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://127.0.0.1:3306/base_personnes?autoReconnect=true&useSSL=false", "roger", "password");
+            String queryString = "DELETE FROM personne WHERE idPersonne=?";
+            ptmt = connection.prepareStatement(queryString);
             ptmt.setInt(1, person.getIdPersonne());
             ptmt.executeUpdate();
-            connection.close();
             dataBaseChanged = true;
         }
         catch (SQLException e)
@@ -207,7 +406,37 @@ public class SqlPersonneDaoImpl implements IPersonneDao
             e.printStackTrace();
             return false;
         }
-        if(log.isDebugEnabled()) {log.debug("Deleted " + person);}
+        finally
+        {
+            try
+            {
+                rs.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                ptmt.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                connection.close();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        if (log.isDebugEnabled())
+        {
+            log.debug("Deleted " + person);
+        }
         return true;
     }
 }

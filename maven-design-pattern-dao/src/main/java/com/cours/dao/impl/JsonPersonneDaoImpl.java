@@ -64,13 +64,9 @@ public class JsonPersonneDaoImpl implements IPersonneDao
                 p.setPrenom((String) line.get("prenom"));
                 p.setNom((String) line.get("nom"));
                 // Weight
-                l = (long) line.get("poids");
-                double d = (double) l;
-                p.setPoids(d);
+                p.setPoids((double)line.get("poids"));
                 // Size
-                l = (long) line.get("taille");
-                d = (double) l;
-                p.setTaille(d);
+                p.setTaille((double)line.get("taille"));
 
                 p.setRue((String) line.get("rue"));
                 p.setVille((String) line.get("ville"));
